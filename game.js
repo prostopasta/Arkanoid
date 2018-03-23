@@ -32,7 +32,7 @@ var game = {
 			this.sprites[key].src = 'images/' + key + '.png';
 		}
 	},
-	generateBlocks: function(){
+	create: function(){
 		for ( var i = 0; i <= 2; i++ ) {
 			for ( var j = 0; j <= 7; j++ ) {
 				this.blocks.push({
@@ -95,7 +95,7 @@ var game = {
 	start: function(){
 		this.init();
 		this.preload();
-		this.generateBlocks();
+		this.create();
 		this.run();
 	}
 };

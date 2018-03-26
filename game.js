@@ -3,9 +3,9 @@ var game = {
 	width: 640,
 	height: 360,
 	score: 0,
-	sprites: { paddle: undefined, background: undefined, block: undefined, ball: undefined},
+	sprites: { platform: undefined, background: undefined, block: undefined, ball: undefined},
 	ball: {},
-	paddle: {},
+	platform: {},
 	blocks: [],
 	rows: 4,
 	cols: 8,
@@ -15,15 +15,15 @@ var game = {
 		this.ctx.fillStyle = '#FFFFFF';
 		window.addEventListener('keydown', function(e){
 			if ( e.keyCode == 32 ) {
-				game.paddle.releaseBall();
+				game.platform.releaseBall();
 			} else if ( e.keyCode == 37 ) {
-				game.paddle.dx = -game.paddle.velocity;
+				game.platform.dx = -game.platform.velocity;
 			} else if ( e.keyCode == 39 ) {
-				game.paddle.dx = game.paddle.velocity;
+				game.platform.dx = game.platform.velocity;
 			}
 		});
 		window.addEventListener('keyup', function(e){
-			game.paddle.stop();
+			game.platform.stop();
 		});
 	},
 	preload: function(){
@@ -46,16 +46,16 @@ var game = {
 		}
 	},
 	update: function() {
-		if ( this.ball.collide(this.paddle) ) {
-			this.ball.bumpPuddle(this.paddle);
+		if ( this.ball.collide(this.platform) ) {
+			this.ball.bumpPuddle(this.platform);
 		}
 
 		if( this.ball.dx || this.ball.dy ) {
 			this.ball.move();
 		}
 
-		if( this.paddle.dx ) {
-			this.paddle.move();
+		if( this.platform.dx ) {
+			this.platform.move();
 		}
 
 		this.blocks.forEach(function(element, index){
@@ -72,7 +72,7 @@ var game = {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 		this.ctx.drawImage(this.sprites.background, 0, 0);
 		this.ctx.drawImage(this.sprites.ball, this.ball.width * this.ball.frame, 0, this.ball.width, this.ball.height, this.ball.x, this.ball.y, this.ball.width, this.ball.height);
-		this.ctx.drawImage(this.sprites.paddle, this.paddle.x, this.paddle.y);
+		this.ctx.drawImage(this.sprites.platform, this.platform.x, this.platform.y);
 		this.blocks.forEach(function(element){
 			if ( element.isAlive ) {
 				this.ctx.drawImage(this.sprites.block, element.x, element.y);
@@ -138,8 +138,8 @@ game.ball = {
 		}
 		return false;
 	},
-	onTheLeftSide: function(paddle) {
-		return (this.x + this.width / 2) < (paddle.x + paddle.width / 2);
+	onTheLeftSide: function(platform) {
+		return (this.x + this.width / 2) < (platform.x + platform.width / 2);
 	},
 	checkBounds: function(){
 		var x = this.x + this.dx;
@@ -158,9 +158,9 @@ game.ball = {
 			this.over('Game Over');
 		}
 	},
-	bumpPuddle: function(paddle){
+	bumpPuddle: function(platform){
 		this.dy = -this.velocity;
-		this.dx = this.onTheLeftSide(paddle) ? -this.velocity : this.velocity;
+		this.dx = this.onTheLeftSide(platform) ? -this.velocity : this.velocity;
 	},
 	bumpBlock: function(block){
 		block.isAlive = false;
@@ -177,7 +177,7 @@ game.ball = {
 	}
 };
 
-game.paddle = {
+game.platform = {
 	x: 300,
 	y: 300,
 	dx: 0,

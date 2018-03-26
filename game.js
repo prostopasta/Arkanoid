@@ -10,22 +10,20 @@ var game = {
 	rows: 4,
 	cols: 8,
 	init: function(){
-		var canvas = document.getElementById("mycanvas");
-		this.ctx = canvas.getContext("2d");
+		this.ctx = document.getElementById("mycanvas").getContext("2d");
 		this.ctx.font = '20px Arial';
 		this.ctx.fillStyle = '#FFFFFF';
-		var self = this;
 		window.addEventListener('keydown', function(e){
 			if ( e.keyCode == 32 ) {
-				self.paddle.releaseBall();
+				game.paddle.releaseBall();
 			} else if ( e.keyCode == 37 ) {
-				self.paddle.dx = -self.paddle.velocity;
+				game.paddle.dx = -game.paddle.velocity;
 			} else if ( e.keyCode == 39 ) {
-				self.paddle.dx = self.paddle.velocity;
+				game.paddle.dx = game.paddle.velocity;
 			}
 		});
 		window.addEventListener('keyup', function(e){
-			self.paddle.stop();
+			game.paddle.stop();
 		});
 	},
 	preload: function(){

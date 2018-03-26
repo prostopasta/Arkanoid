@@ -7,6 +7,8 @@ var game = {
 	ball: {},
 	paddle: {},
 	blocks: [],
+	rows: 4,
+	cols: 8,
 	init: function(){
 		var canvas = document.getElementById("mycanvas");
 		this.ctx = canvas.getContext("2d");
@@ -32,12 +34,12 @@ var game = {
 			this.sprites[key].src = 'images/' + key + '.png';
 		}
 	},
-	create: function(){
-		for ( var i = 0; i <= 2; i++ ) {
-			for ( var j = 0; j <= 7; j++ ) {
+	generateBlocks: function(){
+		for ( var row = 0; row < this.rows; row++ ) {
+			for ( var col = 0; col < this.cols; col++ ) {
 				this.blocks.push({
-					x: 68 * j + 50,
-					y: 36 * i + 35,
+					x: 68 * col + 50,
+					y: 36 * row + 35,
 					width: 64,
 					height: 32,
 					isAlive: true
@@ -95,7 +97,7 @@ var game = {
 	start: function(){
 		this.init();
 		this.preload();
-		this.create();
+		this.generateBlocks();
 		this.run();
 	}
 };

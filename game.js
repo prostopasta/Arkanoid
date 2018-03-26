@@ -73,7 +73,7 @@ var game = {
 	render: function() {
 		this.ctx.clearRect(0, 0, this.width, this.height);
 		this.ctx.drawImage(this.sprites.background, 0, 0);
-	    this.ctx.drawImage(this.sprites.ball, this.ball.width * this.ball.frame, 0, this.ball.width, this.ball.height, this.ball.x, this.ball.y, this.ball.width, this.ball.height);
+		this.ctx.drawImage(this.sprites.ball, this.ball.width * this.ball.frame, 0, this.ball.width, this.ball.height, this.ball.x, this.ball.y, this.ball.width, this.ball.height);
 		this.ctx.drawImage(this.sprites.paddle, this.paddle.x, this.paddle.y);
 		this.blocks.forEach(function(element){
 			if ( element.isAlive ) {
